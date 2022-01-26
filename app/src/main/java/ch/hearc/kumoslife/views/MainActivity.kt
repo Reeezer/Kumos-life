@@ -124,6 +124,20 @@ class MainActivity : AppCompatActivity()
                     val returnedData = data.extras!!.get(MinigameActivity.MINIGAME_COLLECTED_ID) as Int
                     //Toast.makeText(this, "Collected $returnedData unit(s) of FROOTS", Toast.LENGTH_SHORT).show()
                     addMoney(returnedData)
+
+                    val activityStat: Statistic? = statisticViewModel.getStatisticByName("Activity")
+                    if (activityStat != null)
+                    {
+                        Log.i(TAG, "Need for Actvitiy has been decreased")
+                        statisticViewModel.decrease(10.0, activityStat)
+                    }
+
+                    val sicknessStat: Statistic? = statisticViewModel.getStatisticByName("Sickness")
+                    if (sicknessStat != null)
+                    {
+                        Log.i(TAG, "Sickness has been decreased") // "high health" actually represents an unealthy Kumo, the meaning is inveted
+                        statisticViewModel.decrease(5.0, sicknessStat)
+                    }
                 }
             }
         }
@@ -534,24 +548,25 @@ class MainActivity : AppCompatActivity()
                 {
                     if (isDay) bgVideoView.setVideoPath(resPath + R.raw.day_fog)
                     else bgVideoView.setVideoPath(resPath + R.raw.night_fog)
-                    kumofragment.changeKumosShape(KumoColor.WHITE, KumosEyes.SAD, KumoMouth.SAD)
+                    kumofragment.changeKumosShape(KumoColor.GRAY, KumosEyes.SAD, KumoMouth.SAD)
                 }
                 "Mist" ->
                 {
                     if (isDay) bgVideoView.setVideoPath(resPath + R.raw.day_fog)
                     else bgVideoView.setVideoPath(resPath + R.raw.night_fog)
-                    kumofragment.changeKumosShape(KumoColor.WHITE, KumosEyes.SAD, KumoMouth.SAD)
+                    kumofragment.changeKumosShape(KumoColor.GRAY, KumosEyes.SAD, KumoMouth.SAD)
                 }
                 "Rain" ->
                 {
                     if (isDay) bgVideoView.setVideoPath(resPath + R.raw.rain)
                     else bgVideoView.setVideoPath(resPath + R.raw.rain_night)
-                    kumofragment.changeKumosShape(KumoColor.WHITE, KumosEyes.SAD, KumoMouth.SAD)
+                    kumofragment.changeKumosShape(KumoColor.GRAY, KumosEyes.SAD, KumoMouth.SAD)
                 }
                 "Snow" ->
                 {
                     if (isDay) bgVideoView.setVideoPath(resPath + R.raw.snow_day)
                     else bgVideoView.setVideoPath(resPath + R.raw.snow_night)
+                    kumofragment.changeKumosShape(KumoColor.WHITE, KumosEyes.HAPPY, KumoMouth.HAPPY)
                 }
                 else   ->
                 {
