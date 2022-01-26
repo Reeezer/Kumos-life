@@ -51,16 +51,15 @@ abstract class AppDatabase : RoomDatabase()
 
                         val shopViewModel = ShopViewModel.getInstance(activity)
                         shopViewModel.resetFood()
-
-                        // Data base update every 15 minutes
-                        val statisticsWorker = PeriodicWorkRequestBuilder<StatisticsWorker>(15, TimeUnit.MINUTES).build()
-                        workManager = WorkManager.getInstance(activity)
-                        workManager.enqueueUniquePeriodicWork("statisticsWorker", ExistingPeriodicWorkPolicy.REPLACE, statisticsWorker)
                     }
 
                     override fun onOpen(db: SupportSQLiteDatabase)
                     {
                         Log.i(TAG, "Data base is opened")
+                        // Data base update every 15 minutes
+                        val statisticsWorker = PeriodicWorkRequestBuilder<StatisticsWorker>(15, TimeUnit.MINUTES).build()
+                        workManager = WorkManager.getInstance(activity)
+                        workManager.enqueueUniquePeriodicWork("statisticsWorker", ExistingPeriodicWorkPolicy.REPLACE, statisticsWorker)
                     }
                 }
 
